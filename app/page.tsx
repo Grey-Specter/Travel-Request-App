@@ -23,7 +23,7 @@ export default function Page() {
           <p
             className={`${lusitana.className} text-xl text-gray-800 md:text-3xl md:leading-normal`}
           >
-            <strong>Welcome to your Travel Request Application.</strong>
+            <strong>Welcome to the Travel Request Application.</strong>
             <br />
             This is the premier application for CFT MCAT members to submit
             travel requests for our esteemed leadership to review and approve!
