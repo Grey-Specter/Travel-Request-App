@@ -1,4 +1,4 @@
-import { CustomerField } from "@/app/lib/definitions";
+import { EmployeeField } from "@/app/lib/definitions";
 import Link from "next/link";
 import {
   CheckIcon,
@@ -9,28 +9,28 @@ import {
 import { Button } from "@/app/ui/button";
 import { createInvoice } from "@/app/lib/actions";
 
-export default function Form({ customers }: { customers: CustomerField[] }) {
+export default function Form({ employees }: { employees: EmployeeField[] }) {
   return (
     <form action={createInvoice}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* Customer Name */}
+        {/* Employee Name */}
         <div className="mb-4">
-          <label htmlFor="customer" className="mb-2 block text-sm font-medium">
-            Choose customer
+          <label htmlFor="employee" className="mb-2 block text-sm font-medium">
+            Choose employee
           </label>
           <div className="relative">
             <select
-              id="customer"
-              name="customerId"
+              id="employee"
+              name="employeeId"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               defaultValue=""
             >
               <option value="" disabled>
-                Select a customer
+                Select an employee
               </option>
-              {customers.map((customer) => (
-                <option key={customer.id} value={customer.id}>
-                  {customer.name}
+              {employees.map((employee) => (
+                <option key={employee.id} value={employee.id}>
+                  {employee.first_name}, {employee.last_name}
                 </option>
               ))}
             </select>

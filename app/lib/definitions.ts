@@ -2,6 +2,123 @@
 // It describes the shape of the data, and what data type each property should accept.
 // For simplicity of teaching, we're manually defining these types.
 // However, these types are generated automatically if you're using an ORM such as Prisma.
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+};
+
+export type Employee = {
+  id: string;
+  first_name: string;
+  last_name: string;
+};
+
+export type TravelRequest = {
+  id: string;
+  employee_id: string;
+  sponsor: string;
+  project_slin: string;
+  purpose: string;
+  start_date: string;
+  end_date: string;
+  num_travel_days: number;
+  origin: string;
+  destination: string;
+  pri_trans_mode: string;
+  estimated_cost: number;
+  status: "pending" | "approved" | "denied"; // In TypeScript, this is called a string union type.
+};
+
+export type TravelMetrics = {
+  month: string;
+  revenue: number;
+};
+
+export type LatestTravelRequest = {
+  id: string;
+  employee_id: string;
+  sponsor: string;
+  project_slin: string;
+  purpose: string;
+  start_date: string;
+  end_date: string;
+  num_travel_days: number;
+  origin: string;
+  destination: string;
+  pri_trans_mode: string;
+  estimated_cost: number;
+};
+
+// The database returns a number for amount, but we later format it to a string with the formatCurrency function
+export type LatestTravelRequestRaw = Omit<
+  LatestTravelRequest,
+  "estimated_cost"
+> & {
+  estimated_cost: number;
+};
+
+export type TravelRequestTable = {
+  id: string;
+  employee_id: string;
+  sponsor: string;
+  project_slin: string;
+  purpose: string;
+  start_date: string;
+  end_date: string;
+  num_travel_days: number;
+  origin: string;
+  destination: string;
+  pri_trans_mode: string;
+  estimated_cost: number;
+  status: "pending" | "approved" | "denied";
+};
+
+export type EmployeesTableType = {
+  id: string;
+  first_name: string;
+  last_name: string;
+  total_requests: number;
+  total_pending: number;
+  total_approved: number;
+  total_denied: number;
+};
+
+export type FormatteEmployeeTable = {
+  id: string;
+  first_name: string;
+  last_name: string;
+  total_requests: number;
+  total_pending: number;
+  total_approved: number;
+  total_denied: number;
+};
+
+export type EmployeeField = {
+  id: string;
+  first_name: string;
+  last_name: string;
+};
+
+export type TravelRequestForm = {
+  id: string;
+  employee_id: string;
+  sponsor: string;
+  project_slin: string;
+  purpose: string;
+  start_date: string;
+  end_date: string;
+  num_travel_days: number;
+  origin: string;
+  destination: string;
+  pri_trans_mode: string;
+  estimated_cost: number;
+  status: "pending" | "approved" | "denied";
+};
+
+/*
 export type User = {
   id: string;
   name: string;
@@ -23,7 +140,7 @@ export type Invoice = {
   date: string;
   // In TypeScript, this is called a string union type.
   // It means that the "status" property can only be one of the two strings: 'pending' or 'paid'.
-  status: 'pending' | 'paid';
+  status: "pending" | "paid";
 };
 
 export type Revenue = {
@@ -40,7 +157,7 @@ export type LatestInvoice = {
 };
 
 // The database returns a number for amount, but we later format it to a string with the formatCurrency function
-export type LatestInvoiceRaw = Omit<LatestInvoice, 'amount'> & {
+export type LatestInvoiceRaw = Omit<LatestInvoice, "amount"> & {
   amount: number;
 };
 
@@ -52,7 +169,7 @@ export type InvoicesTable = {
   image_url: string;
   date: string;
   amount: number;
-  status: 'pending' | 'paid';
+  status: "pending" | "paid";
 };
 
 export type CustomersTableType = {
@@ -84,5 +201,6 @@ export type InvoiceForm = {
   id: string;
   customer_id: string;
   amount: number;
-  status: 'pending' | 'paid';
+  status: "pending" | "paid";
 };
+*/
