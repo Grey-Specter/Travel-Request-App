@@ -4,14 +4,15 @@ import {
   CheckIcon,
   ClockIcon,
   CurrencyDollarIcon,
+  TrashIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import { Button } from "@/app/ui/button";
-import { createInvoice } from "@/app/lib/actions";
+import { createTravelRequest } from "@/app/lib/actions";
 
 export default function Form({ employees }: { employees: EmployeeField[] }) {
   return (
-    <form action={createInvoice}>
+    <form action={createTravelRequest}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Employee Name */}
         <div className="mb-4">
@@ -30,7 +31,7 @@ export default function Form({ employees }: { employees: EmployeeField[] }) {
               </option>
               {employees.map((employee) => (
                 <option key={employee.id} value={employee.id}>
-                  {employee.first_name}, {employee.last_name}
+                  {employee.first_name}
                 </option>
               ))}
             </select>
@@ -40,14 +41,17 @@ export default function Form({ employees }: { employees: EmployeeField[] }) {
 
         {/* Invoice Amount */}
         <div className="mb-4">
-          <label htmlFor="amount" className="mb-2 block text-sm font-medium">
+          <label
+            htmlFor="estimatedCost"
+            className="mb-2 block text-sm font-medium"
+          >
             Choose an amount
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
-                id="amount"
-                name="amount"
+                id="estimatedCost"
+                name="estimatedCost"
                 type="number"
                 step="0.01"
                 placeholder="Enter USD amount"
@@ -61,7 +65,7 @@ export default function Form({ employees }: { employees: EmployeeField[] }) {
         {/* Invoice Status */}
         <fieldset>
           <legend className="mb-2 block text-sm font-medium">
-            Set the invoice status
+            Set the travel request status
           </legend>
           <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
             <div className="flex gap-4">
@@ -82,17 +86,32 @@ export default function Form({ employees }: { employees: EmployeeField[] }) {
               </div>
               <div className="flex items-center">
                 <input
-                  id="paid"
+                  id="approved"
                   name="status"
                   type="radio"
-                  value="paid"
+                  value="approved"
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                 />
                 <label
-                  htmlFor="paid"
+                  htmlFor="approved"
                   className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-medium text-white"
                 >
-                  Paid <CheckIcon className="h-4 w-4" />
+                  Approved <CheckIcon className="h-4 w-4" />
+                </label>
+              </div>
+              <div className="flex items-center">
+                <input
+                  id="denied"
+                  name="status"
+                  type="radio"
+                  value="denied"
+                  className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
+                />
+                <label
+                  htmlFor="denied"
+                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-medium text-white"
+                >
+                  Denied <TrashIcon className="h-4 w-4" />
                 </label>
               </div>
             </div>
@@ -106,7 +125,7 @@ export default function Form({ employees }: { employees: EmployeeField[] }) {
         >
           Cancel
         </Link>
-        <Button type="submit">Create Invoice</Button>
+        <Button type="submit">Create Travel Request</Button>
       </div>
     </form>
   );

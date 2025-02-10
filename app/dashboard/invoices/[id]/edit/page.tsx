@@ -1,17 +1,17 @@
 import Form from "@/app/ui/invoices/edit-form";
 import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
-import { fetchInvoiceById, fetchCustomers } from "@/app/lib/data";
+import { fetchTravelRequestById, fetchEmployees } from "@/app/lib/data";
 import { notFound } from "next/navigation";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const id = params.id;
-  const [invoice, customers] = await Promise.all([
-    fetchInvoiceById(id),
-    fetchCustomers(),
+  const [travelRequest, employees] = await Promise.all([
+    fetchTravelRequestById(id),
+    fetchEmployees(),
   ]);
 
-  if (!invoice) {
+  if (!travelRequest) {
     notFound();
   }
 
@@ -19,15 +19,15 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: "Invoices", href: "/dashboard/invoices" },
+          { label: "Travel Requests", href: "/dashboard/invoices" },
           {
-            label: "Edit Invoice",
+            label: "Edit Travel Requests",
             href: `/dashboard/invoices/${id}/edit`,
             active: true,
           },
         ]}
       />
-      <Form invoice={invoice} customers={customers} />
+      <Form travelRequest={travelRequest} employees={employees} />
     </main>
   );
 }

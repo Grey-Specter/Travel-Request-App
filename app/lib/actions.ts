@@ -9,27 +9,29 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
 const FormSchema = z.object({
   id: z.string(),
-  customerId: z.string(),
-  amount: z.coerce.number(),
-  status: z.enum(["pending", "paid"]),
-  date: z.string(),
+  employeeId: z.string(),
+  purpose: z.string(),
+  startDate: z.string(),
+  endDate: z.string(),
+  status: z.enum(["pending", "approved", "denied"]),
 });
 
-const CreateInvoice = FormSchema.omit({ id: true, date: true });
+const CreateTravelRequest = FormSchema.omit({
+  id: true,
+});
 
-export async function createInvoice(formData: FormData) {
-  const { customerId, amount, status } = CreateInvoice.parse({
-    customerId: formData.get("customerId"),
-    amount: formData.get("amount"),
-    status: formData.get("status"),
-  });
-  const amountInCents = amount * 100;
-  const date = new Date().toISOString().split("T")[0];
+export async function createTravelRequest(formData: FormData) {
+  const { employeeId, purpose, startDate, endDate, status } =
+    CreateTravelRequest.parse({
+      employeeId: formData.get("employeeId"),
+      firstName: formData.get("firstName"),
+      status: formData.get("status"),
+    });
 
   try {
     await sql`
-      INSERT INTO invoices (customer_id, amount, status, date)
-      VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
+      INSERT INTO travel_requests (employee_id, purpose, start_date, end_date, status)
+      VALUES (${employeeId}, ${purpose}, ${startDate}, ${endDate}, ${status})
       `;
   } catch (error) {
     console.error(error);
@@ -39,21 +41,24 @@ export async function createInvoice(formData: FormData) {
   redirect("/dashboard/invoices");
 }
 
-const UpdateInvoice = FormSchema.omit({ id: true, date: true });
+const UpdateTravelRequest = FormSchema.omit({ id: true });
 
-export async function updateInvoice(id: string, formData: FormData) {
-  const { customerId, amount, status } = UpdateInvoice.parse({
-    customerId: formData.get("customerId"),
-    amount: formData.get("amount"),
-    status: formData.get("status"),
-  });
+export async function updateTravelRequest(id: string, formData: FormData) {
+  const { employeeId, purpose, startDate, endDate, status } =
+    UpdateTravelRequest.parse({
+      employeeId: formData.get("employeeId"),
+      purpose: formData.get("purpose"),
+      startDate: formData.get("startDate"),
+      endDate: formData.get("endDate"),
+      status: formData.get("status"),
+    });
 
-  const amountInCents = amount * 100;
+  //const amountInCents = amount * 100;
 
   try {
     await sql`
-      UPDATE invoices
-      SET customer_id = ${customerId}, amount = ${amount}, status = ${status}
+      UPDATE travel_requests
+      SET employee_id = ${employeeId}, purpose = ${purpose}, start_date = ${startDate}, end_date = ${endDate}, status = ${status}
       WHERE id = ${id}
       `;
   } catch (error) {
@@ -64,8 +69,7 @@ export async function updateInvoice(id: string, formData: FormData) {
   redirect("/dashboard/invoices");
 }
 
-export async function deleteInvoice(id: string) {
-  throw new Error("Failed to Delete Invoice");
-  await sql`DELETE FROM invoices WHERE id = ${id}`;
+export async function deleteTravelRequest(id: string) {
+  await sql`DELETE FROM travel_requests WHERE id = ${id}`;
   revalidatePath("/dashboard/invoices");
 }

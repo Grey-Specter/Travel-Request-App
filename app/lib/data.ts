@@ -1,19 +1,19 @@
 import { sql } from "@vercel/postgres";
 import {
-  CustomerField,
-  CustomersTableType,
-  InvoiceForm,
-  InvoicesTable,
-  LatestInvoiceRaw,
-  Revenue,
+  EmployeeField,
+  EmployeesTableType,
+  TravelRequestForm,
+  TravelRequestsTable,
+  LatestTravelRequestRaw,
+  TravelMetrics,
 } from "./definitions";
 import { formatCurrency } from "./utils";
 
-export async function fetchRevenue() {
+export async function fetchTravelMetrics() {
   try {
     console.log("Fetching revenue data...");
 
-    const data = await sql<Revenue>`SELECT * FROM revenue`;
+    const data = await sql<TravelMetrics>`SELECT * FROM travel_metrics`;
 
     return data.rows;
   } catch (error) {
@@ -22,23 +22,23 @@ export async function fetchRevenue() {
   }
 }
 
-export async function fetchLatestInvoices() {
+export async function fetchLatestTravelRequests() {
   try {
-    const data = await sql<LatestInvoiceRaw>`
-      SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
-      FROM invoices
-      JOIN customers ON invoices.customer_id = customers.id
-      ORDER BY invoices.date DESC
+    const data = await sql<LatestTravelRequestRaw>`
+      SELECT travel_requests.estimated_cost, employees.first_name, travel_requests.id
+      FROM travel_requests
+      JOIN employees ON travel_requests.employee_id = employees.id
+      ORDER BY travel_requests.start_date DESC
       LIMIT 5`;
 
-    const latestInvoices = data.rows.map((invoice) => ({
-      ...invoice,
-      amount: formatCurrency(invoice.amount),
+    const latestTravelRequest = data.rows.map((travel_request) => ({
+      ...travel_request,
+      estimated_cost: formatCurrency(travel_request.estimated_cost),
     }));
-    return latestInvoices;
+    return latestTravelRequest;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch the latest invoices.");
+    throw new Error("Failed to fetch the latest travel requests.");
   }
 }
 
@@ -47,29 +47,33 @@ export async function fetchCardData() {
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
     // how to initialize multiple queries in parallel with JS.
-    const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
-    const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
-    const invoiceStatusPromise = sql`SELECT
-         SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
-         SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
-         FROM invoices`;
+    const travelRequestCountPromise = sql`SELECT COUNT(*) FROM travel_requests`;
+    const employeeCountPromise = sql`SELECT COUNT(*) FROM employees`;
+    const travelRequestStatusPromise = sql`SELECT
+         SUM(CASE WHEN status = 'approved' THEN estimated_cost ELSE 0 END) AS "approved",
+         SUM(CASE WHEN status = 'pending' THEN estimated_cost ELSE 0 END) AS "pending"
+         FROM travel_requests`;
 
     const data = await Promise.all([
-      invoiceCountPromise,
-      customerCountPromise,
-      invoiceStatusPromise,
+      travelRequestCountPromise,
+      employeeCountPromise,
+      travelRequestStatusPromise,
     ]);
 
-    const numberOfInvoices = Number(data[0].rows[0].count ?? "0");
-    const numberOfCustomers = Number(data[1].rows[0].count ?? "0");
-    const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? "0");
-    const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? "0");
+    const numberOfTravelRequests = Number(data[0].rows[0].count ?? "0");
+    const numberOfEmployees = Number(data[1].rows[0].count ?? "0");
+    const totalApprovedTravelRequests = formatCurrency(
+      data[2].rows[0].approved ?? "0"
+    );
+    const totalPendingTravelRequests = formatCurrency(
+      data[2].rows[0].pending ?? "0"
+    );
 
     return {
-      numberOfCustomers,
-      numberOfInvoices,
-      totalPaidInvoices,
-      totalPendingInvoices,
+      numberOfEmployees,
+      numberOfTravelRequests,
+      totalApprovedTravelRequests,
+      totalPendingTravelRequests,
     };
   } catch (error) {
     console.error("Database Error:", error);
@@ -78,134 +82,144 @@ export async function fetchCardData() {
 }
 
 const ITEMS_PER_PAGE = 6;
-export async function fetchFilteredInvoices(
+export async function fetchFilteredTravelRequests(
   query: string,
   currentPage: number
 ) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const invoices = await sql<InvoicesTable>`
+    const travelRequests = await sql<TravelRequestsTable>`
       SELECT
-        invoices.id,
-        invoices.amount,
-        invoices.date,
-        invoices.status,
-        customers.name,
-        customers.email,
-        customers.image_url
-      FROM invoices
-      JOIN customers ON invoices.customer_id = customers.id
+        travel_requests.id,
+        travel_requests.sponsor,
+        travel_requests.project_SLIN,
+        travel_requests.purpose,
+        travel_requests.start_date,
+        travel_requests.end_date,
+        travel_requests.num_travel_days,
+        travel_requests.origin,
+        travel_requests.destination,
+        travel_requests.pri_trans_mode,
+        travel_requests.estimated_cost,
+        travel_requests.status,
+        employees.first_name,
+        employees.last_name
+      FROM travel_requests
+      JOIN employees ON travel_requests.employee_id = employees.id
       WHERE
-        customers.name ILIKE ${`%${query}%`} OR
-        customers.email ILIKE ${`%${query}%`} OR
-        invoices.amount::text ILIKE ${`%${query}%`} OR
-        invoices.date::text ILIKE ${`%${query}%`} OR
-        invoices.status ILIKE ${`%${query}%`}
-      ORDER BY invoices.date DESC
+        employees.first_name ILIKE ${`%${query}%`} OR
+        employees.last_name ILIKE ${`%${query}%`} OR
+        travel_requests.estimated_cost::text ILIKE ${`%${query}%`} OR
+        travel_requests.start_date::text ILIKE ${`%${query}%`} OR
+        travel_requests.end_date::text ILIKE ${`%${query}%`} OR
+        travel_requests.status ILIKE ${`%${query}%`}
+      ORDER BY travel_requests.start_date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
-    return invoices.rows;
+    return travelRequests.rows;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch invoices.");
+    throw new Error("Failed to fetch travel requests.");
   }
 }
 
-export async function fetchInvoicesPages(query: string) {
+export async function fetchTravelRequestsPages(query: string) {
   try {
     const count = await sql`SELECT COUNT(*)
-    FROM invoices
-    JOIN customers ON invoices.customer_id = customers.id
+    FROM travel_requests
+    JOIN employees ON travel_requests.employee_id = employees.id
     WHERE
-      customers.name ILIKE ${`%${query}%`} OR
-      customers.email ILIKE ${`%${query}%`} OR
-      invoices.amount::text ILIKE ${`%${query}%`} OR
-      invoices.date::text ILIKE ${`%${query}%`} OR
-      invoices.status ILIKE ${`%${query}%`}
+      employees.first_name ILIKE ${`%${query}%`} OR
+      employees.last_name ILIKE ${`%${query}%`} OR
+      travel_requests.estimated_cost::text ILIKE ${`%${query}%`} OR
+      travel_requests.start_date::text ILIKE ${`%${query}%`} OR
+      travel_requests.end_date::text ILIKE ${`%${query}%`} OR
+      travel_requests.status ILIKE ${`%${query}%`}
   `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch total number of invoices.");
+    throw new Error("Failed to fetch total number of travel requests.");
   }
 }
 
-export async function fetchInvoiceById(id: string) {
+export async function fetchTravelRequestById(id: string) {
   try {
-    const data = await sql<InvoiceForm>`
+    const data = await sql<TravelRequestForm>`
       SELECT
-        invoices.id,
-        invoices.customer_id,
-        invoices.amount,
-        invoices.status
-      FROM invoices
-      WHERE invoices.id = ${id};
+        travel_requests.id,
+        travel_requests.employee_id,
+        travel_requests.estimated_cost,
+        travel_requests.status
+      FROM travel_requests
+      WHERE travel_requests.id = ${id};
     `;
 
-    const invoice = data.rows.map((invoice) => ({
-      ...invoice,
+    const travelRequest = data.rows.map((travelRequest) => ({
+      ...travelRequest,
       // Convert amount from cents to dollars
-      amount: invoice.amount / 100,
+      amount: travelRequest.estimated_cost / 100,
     }));
 
-    return invoice[0];
+    return travelRequest[0];
   } catch (error) {
     console.error("Database Error:", error);
-    throw new Error("Failed to fetch invoice.");
+    throw new Error("Failed to fetch travel request.");
   }
 }
 
-export async function fetchCustomers() {
+export async function fetchEmployees() {
   try {
-    const data = await sql<CustomerField>`
+    const data = await sql<EmployeeField>`
       SELECT
         id,
-        name
-      FROM customers
-      ORDER BY name ASC
+        first_name,
+        last_name
+      FROM employees
+      ORDER BY first_name ASC
     `;
 
-    const customers = data.rows;
-    return customers;
+    const employees = data.rows;
+    return employees;
   } catch (err) {
     console.error("Database Error:", err);
-    throw new Error("Failed to fetch all customers.");
+    throw new Error("Failed to fetch all employees.");
   }
 }
 
-export async function fetchFilteredCustomers(query: string) {
+export async function fetchFilteredEmployees(query: string) {
   try {
-    const data = await sql<CustomersTableType>`
+    const data = await sql<EmployeesTableType>`
 		SELECT
-		  customers.id,
-		  customers.name,
-		  customers.email,
-		  customers.image_url,
-		  COUNT(invoices.id) AS total_invoices,
-		  SUM(CASE WHEN invoices.status = 'pending' THEN invoices.amount ELSE 0 END) AS total_pending,
-		  SUM(CASE WHEN invoices.status = 'paid' THEN invoices.amount ELSE 0 END) AS total_paid
-		FROM customers
-		LEFT JOIN invoices ON customers.id = invoices.customer_id
+		  employees.id,
+		  employees.first_name,
+      employees.last_name,
+		  COUNT(travel_requests.id) AS total_travel_requests,
+		  SUM(CASE WHEN travel_requests.status = 'pending' THEN travel_requests.estimated_cost ELSE 0 END) AS total_pending,
+      SUM(CASE WHEN travel_requests.status = 'approved' THEN travel_requests.estimated_cost ELSE 0 END) AS total_approved,
+      SUM(CASE WHEN travel_requests.status = 'denied' THEN travel_requests.estimated_cost ELSE 0 END) AS total_denied
+		FROM employees
+		LEFT JOIN travel_requests ON employees.id = travel_requests.customer_id
 		WHERE
-		  customers.name ILIKE ${`%${query}%`} OR
-        customers.email ILIKE ${`%${query}%`}
-		GROUP BY customers.id, customers.name, customers.email, customers.image_url
-		ORDER BY customers.name ASC
+		  employees.first_name ILIKE ${`%${query}%`} OR
+      employees.first_name ILIKE ${`%${query}%`} OR
+		GROUP BY employees.id, employees.first_name, employees.last_name
+		ORDER BY employees.first_name ASC
 	  `;
 
-    const customers = data.rows.map((customer) => ({
-      ...customer,
-      total_pending: formatCurrency(customer.total_pending),
-      total_paid: formatCurrency(customer.total_paid),
+    const employees = data.rows.map((employee) => ({
+      ...employee,
+      total_pending: formatCurrency(employee.total_pending),
+      total_paid: formatCurrency(employee.total_approved),
     }));
 
-    return customers;
+    return employees;
   } catch (err) {
     console.error("Database Error:", err);
-    throw new Error("Failed to fetch customer table.");
+    throw new Error("Failed to fetch employee table.");
   }
 }

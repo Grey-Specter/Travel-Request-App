@@ -34,12 +34,13 @@ export type TravelRequest = {
 
 export type TravelMetrics = {
   month: string;
-  revenue: number;
+  numTravelRequests: number;
 };
 
 export type LatestTravelRequest = {
   id: string;
   employee_id: string;
+  first_name: string;
   sponsor: string;
   project_slin: string;
   purpose: string;
@@ -60,9 +61,11 @@ export type LatestTravelRequestRaw = Omit<
   estimated_cost: number;
 };
 
-export type TravelRequestTable = {
+export type TravelRequestsTable = {
   id: string;
   employee_id: string;
+  first_name: string;
+  last_name: string;
   sponsor: string;
   project_slin: string;
   purpose: string;
@@ -86,7 +89,7 @@ export type EmployeesTableType = {
   total_denied: number;
 };
 
-export type FormatteEmployeeTable = {
+export type FormattedEmployeesTable = {
   id: string;
   first_name: string;
   last_name: string;
