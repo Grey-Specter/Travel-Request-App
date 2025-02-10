@@ -3,7 +3,7 @@ import Search from "@/app/ui/search";
 import Table from "@/app/ui/invoices/table";
 import { CreateTravelRequest } from "@/app/ui/invoices/buttons";
 import { lusitana } from "@/app/ui/fonts";
-import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
+import { TravelRequestsTableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 import { fetchTravelRequestsPages } from "@/app/lib/data";
 
@@ -30,7 +30,7 @@ export default async function Page(props: {
       {
         <Suspense
           key={query + currentPage}
-          fallback={<InvoicesTableSkeleton />}
+          fallback={<TravelRequestsTableSkeleton />}
         >
           <Table query={query} currentPage={currentPage} />
         </Suspense>

@@ -29,7 +29,7 @@ export default async function LatestTravelRequests() {
                 >
                   <div className="flex items-center">
                     <Image
-                      src="/F-22-Sunset"
+                      src="/F22_Sunset.jpg"
                       alt={`${travelRequest.first_name}'s profile picture`}
                       className="mr-4 rounded-full"
                       width={32}
