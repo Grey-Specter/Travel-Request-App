@@ -20,6 +20,7 @@ export default async function CardWrapper() {
     numberOfEmployees,
     totalApprovedTravelRequests,
     totalPendingTravelRequests,
+    totalDeniedTravelRequests,
   } = await fetchCardData();
 
   return (
@@ -30,6 +31,7 @@ export default async function CardWrapper() {
         type="approved"
       />
       <Card title="Pending" value={totalPendingTravelRequests} type="pending" />
+      <Card title="Denied" value={totalDeniedTravelRequests} type="denied" />
       <Card
         title="Total Travel Requests"
         value={numberOfTravelRequests}
@@ -51,7 +53,7 @@ export function Card({
 }: {
   title: string;
   value: number | string;
-  type: "travelRequests" | "employees" | "pending" | "approved";
+  type: "travelRequests" | "employees" | "pending" | "approved" | "denied";
 }) {
   const Icon = iconMap[type];
 

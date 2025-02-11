@@ -52,6 +52,7 @@ export async function fetchCardData() {
     const travelRequestStatusPromise = sql`SELECT
          SUM(CASE WHEN status = 'approved' THEN estimated_cost ELSE 0 END) AS "approved",
          SUM(CASE WHEN status = 'pending' THEN estimated_cost ELSE 0 END) AS "pending"
+         SUM(CASE WHEN status = 'denied' THEN estimated_cost ELSE 0 END) AS "denied"
          FROM travel_requests`;
 
     const data = await Promise.all([
@@ -68,12 +69,16 @@ export async function fetchCardData() {
     const totalPendingTravelRequests = formatCurrency(
       data[2].rows[0].pending ?? "0"
     );
+    const totalDeniedTravelRequests = formatCurrency(
+      data[2].rows[0].pending ?? "0"
+    );
 
     return {
       numberOfEmployees,
       numberOfTravelRequests,
       totalApprovedTravelRequests,
       totalPendingTravelRequests,
+      totalDeniedTravelRequests,
     };
   } catch (error) {
     console.error("Database Error:", error);
