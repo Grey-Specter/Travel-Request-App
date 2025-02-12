@@ -48,33 +48,33 @@ export async function fetchCardData() {
     // However, we are intentionally splitting them to demonstrate
     // how to initialize multiple queries in parallel with JS.
     const travelRequestCountPromise = sql`SELECT COUNT(*) FROM travel_requests`;
-    const employeeCountPromise = sql`SELECT COUNT(*) FROM employees`;
+    //const employeeCountPromise = sql`SELECT COUNT(*) FROM employees`;
     const travelRequestStatusPromise = sql`SELECT
          SUM(CASE WHEN status = 'approved' THEN estimated_cost ELSE 0 END) AS "approved",
-         SUM(CASE WHEN status = 'pending' THEN estimated_cost ELSE 0 END) AS "pending"
+         SUM(CASE WHEN status = 'pending' THEN estimated_cost ELSE 0 END) AS "pending",
          SUM(CASE WHEN status = 'denied' THEN estimated_cost ELSE 0 END) AS "denied"
          FROM travel_requests`;
 
     const data = await Promise.all([
       travelRequestCountPromise,
-      employeeCountPromise,
+      //employeeCountPromise,
       travelRequestStatusPromise,
     ]);
 
     const numberOfTravelRequests = Number(data[0].rows[0].count ?? "0");
-    const numberOfEmployees = Number(data[1].rows[0].count ?? "0");
+    //const numberOfEmployees = Number(data[1].rows[0].count ?? "0");
     const totalApprovedTravelRequests = formatCurrency(
-      data[2].rows[0].approved ?? "0"
+      data[1].rows[0].approved ?? "0"
     );
     const totalPendingTravelRequests = formatCurrency(
-      data[2].rows[0].pending ?? "0"
+      data[1].rows[0].pending ?? "0"
     );
     const totalDeniedTravelRequests = formatCurrency(
-      data[2].rows[0].pending ?? "0"
+      data[1].rows[0].pending ?? "0"
     );
 
     return {
-      numberOfEmployees,
+      //numberOfEmployees,
       numberOfTravelRequests,
       totalApprovedTravelRequests,
       totalPendingTravelRequests,
@@ -208,7 +208,7 @@ export async function fetchFilteredEmployees(query: string) {
       SUM(CASE WHEN travel_requests.status = 'approved' THEN travel_requests.estimated_cost ELSE 0 END) AS total_approved,
       SUM(CASE WHEN travel_requests.status = 'denied' THEN travel_requests.estimated_cost ELSE 0 END) AS total_denied
 		FROM employees
-		LEFT JOIN travel_requests ON employees.id = travel_requests.customer_id
+		LEFT JOIN travel_requests ON employees.id = travel_requests.employee_id
 		WHERE
 		  employees.first_name ILIKE ${`%${query}%`} OR
       employees.first_name ILIKE ${`%${query}%`} OR
@@ -218,8 +218,8 @@ export async function fetchFilteredEmployees(query: string) {
 
     const employees = data.rows.map((employee) => ({
       ...employee,
-      total_pending: formatCurrency(employee.total_pending),
-      total_paid: formatCurrency(employee.total_approved),
+      total_pending: employee.total_pending,
+      total_paid: employee.total_approved,
     }));
 
     return employees;

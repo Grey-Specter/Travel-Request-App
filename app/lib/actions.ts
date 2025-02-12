@@ -5,6 +5,9 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import postgres from "postgres";
 
+const revalPath = "/dashboard/invoices";
+const redirPath = "/dashboard/invoices";
+
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
 const FormSchema = z.object({
@@ -24,7 +27,9 @@ export async function createTravelRequest(formData: FormData) {
   const { employeeId, purpose, startDate, endDate, status } =
     CreateTravelRequest.parse({
       employeeId: formData.get("employeeId"),
-      firstName: formData.get("firstName"),
+      purpose: formData.get("purpose"),
+      startDate: formData.get("startDate"),
+      endDate: formData.get("endDate"),
       status: formData.get("status"),
     });
 

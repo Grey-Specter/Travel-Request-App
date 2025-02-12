@@ -3,21 +3,23 @@ import {
   ClockIcon,
   UserGroupIcon,
   InboxIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
 import { lusitana } from "@/app/ui/fonts";
 import { fetchCardData } from "@/app/lib/data";
 
 const iconMap = {
   approved: BanknotesIcon,
-  employees: UserGroupIcon,
+  //employees: UserGroupIcon,
   pending: ClockIcon,
+  denied: TrashIcon,
   travelRequests: InboxIcon,
 };
 
 export default async function CardWrapper() {
   const {
     numberOfTravelRequests,
-    numberOfEmployees,
+    //numberOfEmployees,
     totalApprovedTravelRequests,
     totalPendingTravelRequests,
     totalDeniedTravelRequests,
@@ -37,11 +39,13 @@ export default async function CardWrapper() {
         value={numberOfTravelRequests}
         type="travelRequests"
       />
+      {/*}
       <Card
         title="Total Employees"
         value={numberOfEmployees}
         type="employees"
       />
+      */}
     </>
   );
 }
@@ -53,7 +57,7 @@ export function Card({
 }: {
   title: string;
   value: number | string;
-  type: "travelRequests" | "employees" | "pending" | "approved" | "denied";
+  type: "travelRequests" | "pending" | "approved" | "denied";
 }) {
   const Icon = iconMap[type];
 

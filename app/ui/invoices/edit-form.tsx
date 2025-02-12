@@ -30,7 +30,7 @@ export default function EditTravelRequestForm({
         {/* Employee Name */}
         <div className="mb-4">
           <label htmlFor="employee" className="mb-2 block text-sm font-medium">
-            Choose customer
+            Choose employee
           </label>
           <div className="relative">
             <select
@@ -44,11 +44,31 @@ export default function EditTravelRequestForm({
               </option>
               {employees.map((employee) => (
                 <option key={employee.id} value={employee.id}>
-                  {employee.first_name}
+                  {employee.first_name + " " + employee.last_name}
                 </option>
               ))}
             </select>
             <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+          </div>
+        </div>
+
+        {/* Start Date */}
+        <div className="mb-4">
+          <label htmlFor="startDate" className="mb-2 block text-sm font-medium">
+            Enter start date
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="startDate"
+                name="startDate"
+                type="date"
+                defaultValue={travelRequest.start_date}
+                placeholder="Enter start date"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
           </div>
         </div>
 
@@ -58,7 +78,7 @@ export default function EditTravelRequestForm({
             htmlFor="estimatedCost"
             className="mb-2 block text-sm font-medium"
           >
-            Choose estimated cost
+            Enter estimated cost
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
@@ -126,7 +146,7 @@ export default function EditTravelRequestForm({
                 />
                 <label
                   htmlFor="denied"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-medium text-white"
+                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-red-500 px-3 py-1.5 text-xs font-medium text-white"
                 >
                   Denied <TrashIcon className="h-4 w-4" />
                 </label>
