@@ -42,8 +42,8 @@ export async function createTravelRequest(formData: FormData) {
     console.error(error);
   }
 
-  revalidatePath("/dashboard/invoices");
-  redirect("/dashboard/invoices");
+  revalidatePath(revalPath);
+  redirect(redirPath);
 }
 
 const UpdateTravelRequest = FormSchema.omit({ id: true });
@@ -70,11 +70,11 @@ export async function updateTravelRequest(id: string, formData: FormData) {
     console.error(error);
   }
 
-  revalidatePath("/dashboard/invoices");
-  redirect("/dashboard/invoices");
+  revalidatePath(revalPath);
+  redirect(redirPath);
 }
 
 export async function deleteTravelRequest(id: string) {
   await sql`DELETE FROM travel_requests WHERE id = ${id}`;
-  revalidatePath("/dashboard/invoices");
+  revalidatePath(revalPath);
 }
