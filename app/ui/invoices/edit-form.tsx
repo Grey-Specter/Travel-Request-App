@@ -52,6 +52,69 @@ export default function EditTravelRequestForm({
           </div>
         </div>
 
+        {/* Sponsor */}
+        <div className="mb-4">
+          <label htmlFor="sponsor" className="mb-2 block text-sm font-medium">
+            Enter Sponsor
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="sponsor"
+                name="sponsor"
+                type="text"
+                defaultValue={travelRequest.sponsor}
+                placeholder="Enter sponsor"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+          </div>
+        </div>
+
+        {/* Project SLIN */}
+        <div className="mb-4">
+          <label
+            htmlFor="projectSLIN"
+            className="mb-2 block text-sm font-medium"
+          >
+            Enter Project SLIN
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="projectSLIN"
+                name="projectSLIN"
+                type="text"
+                defaultValue={travelRequest.project_slin}
+                placeholder="Enter project SLIN"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+          </div>
+        </div>
+
+        {/* Purpose */}
+        <div className="mb-4">
+          <label htmlFor="purpose" className="mb-2 block text-sm font-medium">
+            Enter purpose
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="purpose"
+                name="purpose"
+                type="text"
+                defaultValue={travelRequest.purpose}
+                placeholder="Enter purpose"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+          </div>
+        </div>
+
         {/* Start Date */}
         <div className="mb-4">
           <label htmlFor="startDate" className="mb-2 block text-sm font-medium">
@@ -62,9 +125,117 @@ export default function EditTravelRequestForm({
               <input
                 id="startDate"
                 name="startDate"
-                type="date"
+                type="text"
                 defaultValue={travelRequest.start_date}
                 placeholder="Enter start date"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+          </div>
+        </div>
+
+        {/* End Date */}
+        <div className="mb-4">
+          <label htmlFor="startDate" className="mb-2 block text-sm font-medium">
+            Enter end date
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="endDate"
+                name="endDate"
+                type="text"
+                defaultValue={travelRequest.end_date.split(" ")}
+                placeholder="Enter end date"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+          </div>
+        </div>
+
+        {/* Number of Travel Days */}
+        <div className="mb-4">
+          <label
+            htmlFor="numTravelDays"
+            className="mb-2 block text-sm font-medium"
+          >
+            Enter the number of travel days
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="numTravelDays"
+                name="numTravelDays"
+                type="number"
+                defaultValue={travelRequest.num_travel_days}
+                placeholder="Enter the number of travel days"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+          </div>
+        </div>
+
+        {/* Origin */}
+        <div className="mb-4">
+          <label htmlFor="origin" className="mb-2 block text-sm font-medium">
+            Enter origin city
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="origin"
+                name="origin"
+                type="text"
+                defaultValue={travelRequest.origin}
+                placeholder="Enter origin"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+          </div>
+        </div>
+        {/* Destination */}
+        <div className="mb-4">
+          <label
+            htmlFor="destination"
+            className="mb-2 block text-sm font-medium"
+          >
+            Enter destination city
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="destination"
+                name="destination"
+                type="text"
+                defaultValue={travelRequest.destination}
+                placeholder="Enter destination"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+              <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+            </div>
+          </div>
+        </div>
+
+        {/* Primary Transport Mode */}
+        <div className="mb-4">
+          <label
+            htmlFor="priTransMode"
+            className="mb-2 block text-sm font-medium"
+          >
+            Enter Primary Transportation Method
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="priTransMode"
+                name="priTransMode"
+                type="text"
+                defaultValue={travelRequest.pri_trans_mode}
+                placeholder="Enter primary transportation method"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               />
               <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />

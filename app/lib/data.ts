@@ -158,6 +158,15 @@ export async function fetchTravelRequestById(id: string) {
       SELECT
         travel_requests.id,
         travel_requests.employee_id,
+        travel_requests.sponsor,
+        travel_requests.project_slin,
+        travel_requests.purpose,
+        travel_requests.start_date,
+        travel_requests.end_date,
+        travel_requests.num_travel_days,
+        travel_requests.origin,
+        travel_requests.destination,
+        travel_requests.pri_trans_mode,
         travel_requests.estimated_cost,
         travel_requests.status
       FROM travel_requests
@@ -167,7 +176,7 @@ export async function fetchTravelRequestById(id: string) {
     const travelRequest = data.rows.map((travelRequest) => ({
       ...travelRequest,
       // Convert amount from cents to dollars
-      amount: travelRequest.estimated_cost / 100,
+      estimated_cost: travelRequest.estimated_cost / 100,
     }));
 
     return travelRequest[0];
