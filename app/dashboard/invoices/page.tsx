@@ -1,7 +1,7 @@
-import Pagination from "@/app/ui/travel-requests/pagination";
+import Pagination from "@/app/ui/travelRequests/pagination";
 import Search from "@/app/ui/search";
-import Table from "@/app/ui/travel-requests/table";
-import { CreateTravelRequest } from "@/app/ui/travel-requests/buttons";
+import Table from "@/app/ui/travelRequests/table";
+import { CreateTravelRequest } from "@/app/ui/travelRequests/buttons";
 import { lusitana } from "@/app/ui/fonts";
 import { TravelRequestsTableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
