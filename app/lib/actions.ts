@@ -5,8 +5,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import postgres from "postgres";
 
-const revalPath = "/dashboard/invoices";
-const redirPath = "/dashboard/invoices";
+const revalPath = "/dashboard/travel-requests";
+const redirPath = "/dashboard/travel-requests";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 

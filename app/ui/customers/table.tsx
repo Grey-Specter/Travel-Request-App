@@ -14,7 +14,7 @@ export default async function EmployeesTable({
   return (
     <div className="w-full">
       <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>
-        Customers
+        Employees
       </h1>
       <Search placeholder="Search employees..." />
       <div className="mt-6 flow-root">

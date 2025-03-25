@@ -1,5 +1,5 @@
-import Form from "@/app/ui/travelRequests/edit-form";
-import Breadcrumbs from "@/app/ui/travelRequests/breadcrumbs";
+import Form from "@/app/ui/travel-requests/edit-form";
+import Breadcrumbs from "@/app/ui/travel-requests/breadcrumbs";
 import { fetchTravelRequestById, fetchEmployees } from "@/app/lib/data";
 import { notFound } from "next/navigation";
 
