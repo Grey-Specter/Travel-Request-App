@@ -39,13 +39,96 @@ export default function Form({ employees }: { employees: EmployeeField[] }) {
           </div>
         </div>
 
+        {/* Sponsor */}
+        <div className="mb-4">
+          <label htmlFor="sponsor" className="mb-2 block text-sm font-medium">
+            Sponsor
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="sponsor"
+                name="sponsor"
+                type="text"
+                placeholder="Enter Sponsor Name"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+              <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+            </div>
+          </div>
+        </div>
+        {/* Project SLIN */}
+        <div className="mb-4">
+          <label
+            htmlFor="projectSLIN"
+            className="mb-2 block text-sm font-medium"
+          >
+            Project SLIN
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="projectSLIN"
+                name="projectSLIN"
+                type="text"
+                placeholder="Enter Project SLIN"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Purpose */}
+        <div className="mb-4">
+          <label htmlFor="purpose" className="mb-2 block text-sm font-medium">
+            Project SLIN
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="purpose"
+                name="purpose"
+                type="text"
+                placeholder="Enter Purpose"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Start Date */}
+        <div className="mb-4">
+          <label htmlFor="startDate" className="mb-2 block text-sm font-medium">
+            Start Date
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="startDate"
+                name="startDate"
+                type="date"
+                placeholder="Enter Start Date"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* End Date */}
+        {/* Number of Travel Days */}
+        {/* Origin */}
+        {/* Destination */}
+        {/* Primary Transportation Mode */}
+        {/* Estimated Cost */}
+        {/* Status */}
+
         {/* Invoice Amount */}
         <div className="mb-4">
           <label
             htmlFor="estimatedCost"
             className="mb-2 block text-sm font-medium"
           >
-            Choose an amount
+            Enter an amount
           </label>
           <div className="relative mt-2 rounded-md">
             <div className="relative">
@@ -109,7 +192,7 @@ export default function Form({ employees }: { employees: EmployeeField[] }) {
                 />
                 <label
                   htmlFor="denied"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-medium text-white"
+                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-red-500 px-3 py-1.5 text-xs font-medium text-white"
                 >
                   Denied <TrashIcon className="h-4 w-4" />
                 </label>
