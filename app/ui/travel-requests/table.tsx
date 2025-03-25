@@ -2,8 +2,8 @@ import Image from "next/image";
 import {
   UpdateTravelRequest,
   DeleteTravelRequest,
-} from "@/app/ui/invoices/buttons";
-import TravelRequestStatus from "@/app/ui/invoices/status";
+} from "@/app/ui/travel-requests/buttons";
+import TravelRequestStatus from "@/app/ui/travel-requests/status";
 import { formatDateToLocal, formatCurrency } from "@/app/lib/utils";
 import { fetchFilteredTravelRequests } from "@/app/lib/data";
 

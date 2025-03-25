@@ -1,5 +1,5 @@
-import Form from "@/app/ui/invoices/edit-form";
-import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
+import Form from "@/app/ui/travel-requests/edit-form";
+import Breadcrumbs from "@/app/ui/travel-requests/breadcrumbs";
 import { fetchTravelRequestById, fetchEmployees } from "@/app/lib/data";
 import { notFound } from "next/navigation";
 
@@ -19,10 +19,10 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: "Travel Requests", href: "/dashboard/invoices" },
+          { label: "Travel Requests", href: "/dashboard/travelRequests" },
           {
             label: "Edit Travel Requests",
-            href: `/dashboard/invoices/${id}/edit`,
+            href: `/dashboard/travelRequests/${id}/edit`,
             active: true,
           },
         ]}

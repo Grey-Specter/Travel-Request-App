@@ -136,8 +136,9 @@ export default function EditTravelRequestForm({
         </div>
 
         {/* End Date */}
+        {/**/}
         <div className="mb-4">
-          <label htmlFor="startDate" className="mb-2 block text-sm font-medium">
+          <label htmlFor="endDate" className="mb-2 block text-sm font-medium">
             Enter end date
           </label>
           <div className="relative mt-2 rounded-md">
@@ -146,7 +147,7 @@ export default function EditTravelRequestForm({
                 id="endDate"
                 name="endDate"
                 type="text"
-                defaultValue={travelRequest.end_date.split(" ")}
+                defaultValue={travelRequest.end_date}
                 placeholder="Enter end date"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               />
@@ -154,7 +155,7 @@ export default function EditTravelRequestForm({
             </div>
           </div>
         </div>
-
+        {/**/}
         {/* Number of Travel Days */}
         <div className="mb-4">
           <label

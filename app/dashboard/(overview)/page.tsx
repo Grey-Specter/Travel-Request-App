@@ -1,6 +1,6 @@
 import CardWrapper from "@/app/ui/dashboard/cards";
 import TravelMetricChart from "@/app/ui/dashboard/travel-metric-chart";
-import LatestInvoices from "@/app/ui/dashboard/latest-invoices";
+import LatestTravelRequests from "@/app/ui/dashboard/latest-travel-request";
 import { lusitana } from "@/app/ui/fonts";
 import { Suspense } from "react";
 import {
@@ -27,7 +27,7 @@ export default async function Page() {
         </Suspense>
 
         <Suspense fallback={<LatestTravelRequestsSkeleton />}>
-          <LatestInvoices />
+          <LatestTravelRequests />
         </Suspense>
       </div>
     </main>

@@ -115,14 +115,105 @@ export default function Form({ employees }: { employees: EmployeeField[] }) {
         </div>
 
         {/* End Date */}
-        {/* Number of Travel Days */}
-        {/* Origin */}
-        {/* Destination */}
-        {/* Primary Transportation Mode */}
-        {/* Estimated Cost */}
-        {/* Status */}
+        <div className="mb-4">
+          <label htmlFor="endDate" className="mb-2 block text-sm font-medium">
+            End Date
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="endDate"
+                name="endDate"
+                type="date"
+                placeholder="Enter End Date"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+            </div>
+          </div>
+        </div>
 
-        {/* Invoice Amount */}
+        {/* Number of Travel Days */}
+        <div className="mb-4">
+          <label
+            htmlFor="numTravelDays"
+            className="mb-2 block text-sm font-medium"
+          >
+            Enter an amount
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="numTravelDays"
+                name="numTravelDays"
+                type="number"
+                placeholder="Enter number of travel days"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Origin */}
+        <div className="mb-4">
+          <label htmlFor="origin" className="mb-2 block text-sm font-medium">
+            Origin City
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="origin"
+                name="origin"
+                type="text"
+                placeholder="Enter Origin City"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Destination */}
+        <div className="mb-4">
+          <label
+            htmlFor="destination"
+            className="mb-2 block text-sm font-medium"
+          >
+            Destination City
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="destination"
+                name="destination"
+                type="text"
+                placeholder="Enter Destination City"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Primary Transportation Mode */}
+        <div className="mb-4">
+          <label
+            htmlFor="priTransMode"
+            className="mb-2 block text-sm font-medium"
+          >
+            Primary Transportation Mode
+          </label>
+          <div className="relative mt-2 rounded-md">
+            <div className="relative">
+              <input
+                id="priTransMode"
+                name="priTransMode"
+                type="text"
+                placeholder="Enter Your Primary Transportation Mode"
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Estimated Cost */}
         <div className="mb-4">
           <label
             htmlFor="estimatedCost"
@@ -145,7 +236,8 @@ export default function Form({ employees }: { employees: EmployeeField[] }) {
           </div>
         </div>
 
-        {/* Invoice Status */}
+        {/* Travel Request Status */}
+        {/*
         <fieldset>
           <legend className="mb-2 block text-sm font-medium">
             Set the travel request status
@@ -200,6 +292,7 @@ export default function Form({ employees }: { employees: EmployeeField[] }) {
             </div>
           </div>
         </fieldset>
+        */}
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
