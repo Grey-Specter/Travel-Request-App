@@ -136,7 +136,6 @@ export default function EditTravelRequestForm({
         </div>
 
         {/* End Date */}
-        {/**/}
         <div className="mb-4">
           <label htmlFor="endDate" className="mb-2 block text-sm font-medium">
             Enter end date
@@ -155,7 +154,7 @@ export default function EditTravelRequestForm({
             </div>
           </div>
         </div>
-        {/**/}
+
         {/* Number of Travel Days */}
         <div className="mb-4">
           <label
@@ -198,6 +197,7 @@ export default function EditTravelRequestForm({
             </div>
           </div>
         </div>
+
         {/* Destination */}
         <div className="mb-4">
           <label
