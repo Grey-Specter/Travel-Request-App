@@ -25,7 +25,7 @@ export default function Page() {
           >
             <strong>Welcome to the Travel Request App.</strong>
             <br />
-            This is the premier application for CFT MCAT members to submit
+            This is the premier application for CFT MECAT members to submit
             travel requests for our esteemed leadership to review and approve!
           </p>
           <Link
